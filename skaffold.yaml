@@ -1,0 +1,14 @@
+apiVersion: skaffold/v1
+kind: Config
+build:
+  tagPolicy:
+     sha256: {}
+  artifacts:
+  - image: danielchavero/server-cli
+    docker:
+      dockerfile: cmd/server/Dockerfile
+    context: .
+deploy:
+  kubectl:
+    manifests:
+      - deploy/*

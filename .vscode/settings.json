@@ -1,0 +1,8 @@
+{
+    "cloudcode.last-used-context": {
+        "Launch App on Kubernetes Cluster: Go": {
+            "kubeConfigPath": "~/.kube/config",
+            "contextName": "minikube"
+        }
+    }
+}
