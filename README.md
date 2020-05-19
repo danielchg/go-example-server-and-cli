@@ -25,9 +25,7 @@ the following command.
 $ minikube start
 ```
 
-This will start a default context of Minikube with a single host Kuberentes cluster in your local machine, depending of the driver you are using will create a VM or a Docker container to create the cluster. At this point you already have a `~/.kube/config` file with access to your local cluster. So we are ready to run our app.
-
-The next step is to clone this repo, open it with VSCode and run from the Debugger `Run/Debug on Kubernetes`.
+This will start a default context of Minikube with a single host Kubernetes cluster in your local machine, depending of the driver you are using will create a VM or a Docker container to create the cluster. At this point you should have a `~/.kube/config` file that allow you access to your local cluster with `kubectl`. So we are ready to run our app.
 
 Be aware to update the entry of the `server-ingress.yaml` with the ip address of your minikube instance. In order to the this ip run the following command.
 
@@ -55,6 +53,8 @@ spec:
 ```
 
 We are using `nip.io` to avoid the editing of `/etc/hosts` file, but if you feel more confortable with that option you can use my college tool [hostctl](https://github.com/guumaster/hostctl) to automate this proccess.
+
+The next step is to clone this repo, open it with VSCode and run from the Debugger `Run/Debug on Kubernetes`.
 
 If everything works fine you should open the URL [http://www.172.17.0.3.nip.io](http://www.172.17.0.3.nip.io) and you should see the main page of our blog server.
 
