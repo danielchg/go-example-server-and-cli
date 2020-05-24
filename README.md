@@ -43,7 +43,7 @@ metadata:
   name: server
 spec:
   rules:
-    - host: www.172.17.0.3.nip.io
+    - host: www.172.17.0.2.nip.io
       http:
         paths:
           - path: /

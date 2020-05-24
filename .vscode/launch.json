@@ -14,11 +14,12 @@
             "portForward": true
         },
         {
-            "name": "Launch Package",
+            "name": "Debug CLI",
             "type": "go",
             "request": "launch",
             "mode": "debug",
-            "program": "${workspaceFolder}/cmd/server"
+            "program": "${workspaceFolder}/cmd/cli",
+            "args": ["list"]
         },
         {
             "name": "Server Test Debug",
