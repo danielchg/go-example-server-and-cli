@@ -74,9 +74,11 @@ func initConfig() {
 
 		// Search config in home directory with name ".cli" (without extension).
 		viper.AddConfigPath(home)
+		viper.SetConfigType("yaml")
 		viper.SetConfigName(".cli")
-		cf := fmt.Sprintf("%s/.cli.yaml", home)
-		viper.SetConfigFile(cf)
+		// cf := fmt.Sprintf("%s/.cli.yaml", home)
+		// fmt.Printf("Content of home variable: %s\n", home)
+		// viper.SetConfigFile(cf)
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match

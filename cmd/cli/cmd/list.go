@@ -66,7 +66,7 @@ type Body struct {
 }
 
 func listArticles(url string) []article {
-
+	fmt.Printf("The list article get URL value: %v", url)
 	c := &http.Client{}
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Set("Accept", "application/json")
