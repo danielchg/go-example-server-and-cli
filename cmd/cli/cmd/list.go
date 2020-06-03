@@ -17,12 +17,13 @@ package cmd
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 
+	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -34,10 +35,17 @@ var listCmd = &cobra.Command{
 	Long:  `list all the articles from the server`,
 	Run: func(cmd *cobra.Command, args []string) {
 		url := viper.GetString("url")
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetHeader([]string{"Id", "Title"})
 		a := listArticles(url)
+
 		for i, v := range a {
-			fmt.Printf("Article title %s: %s\n", strconv.Itoa(i), v.Title)
+			// fmt.Printf("Article title %s: %s\n", strconv.Itoa(i), v.Title)
+			var l []string
+			l = append(l, strconv.Itoa(i), v.Title)
+			table.Append(l)
 		}
+		table.Render()
 	},
 }
 
