@@ -21,6 +21,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -33,10 +34,10 @@ var listCmd = &cobra.Command{
 	Long:  `list all the articles from the server`,
 	Run: func(cmd *cobra.Command, args []string) {
 		url := viper.GetString("url")
-		fmt.Printf("Server: %s\n", url)
 		a := listArticles(url)
-		fmt.Printf("First article content: %v\n", a[0].Content)
-		fmt.Printf("Second article content: %v\n", a[1].Content)
+		for i, v := range a {
+			fmt.Printf("Article title %s: %s\n", strconv.Itoa(i), v.Title)
+		}
 	},
 }
 
@@ -66,7 +67,6 @@ type Body struct {
 }
 
 func listArticles(url string) []article {
-	fmt.Printf("The list article get URL value: %v", url)
 	c := &http.Client{}
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Set("Accept", "application/json")

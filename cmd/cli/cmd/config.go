@@ -16,9 +16,7 @@ limitations under the License.
 package cmd
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -30,8 +28,7 @@ var configCmd = &cobra.Command{
 	Short: "Configure the CLI with the server access",
 	Long:  `Start a wizard that allow to configure the access to the server`,
 	Run: func(cmd *cobra.Command, args []string) {
-		c := config{}
-		cfgWizard(&c)
+		cfgWizard()
 	},
 }
 
@@ -40,16 +37,12 @@ func init() {
 
 }
 
-type config struct {
-	Url string `yaml:"url"`
-}
-
-func cfgWizard(c *config) {
-	reader := bufio.NewReader(os.Stdin)
+func cfgWizard() {
 	fmt.Print("Enter the server URL: ")
-	c.Url, _ = reader.ReadString('\n')
 
-	fmt.Printf("Add to the config the following URL: %s", c.Url)
-	viper.Set("url", c.Url)
+	var u string
+	fmt.Scanf("%s", &u)
+	fmt.Printf("Add to the config the following URL: %s", u)
+	viper.Set("url", u)
 	viper.WriteConfig()
 }
