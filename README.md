@@ -43,7 +43,7 @@ metadata:
   name: server
 spec:
   rules:
-    - host: www.172.17.0.2.nip.io
+    - host: www.172.17.0.3.nip.io
       http:
         paths:
           - path: /
@@ -64,6 +64,12 @@ If everything works fine you should open the URL [http://www.172.17.0.3.nip.io](
 go build -o server ./cmd/server
 ```
 
+## Build cli
+
+```bash
+go build -o cli ./cmd/cli
+```
+
 ## Links
 
 [Semaphore CI article part 1](https://semaphoreci.com/community/tutorials/building-go-web-applications-and-microservices-using-gin)
@@ -71,3 +77,5 @@ go build -o server ./cmd/server
 [Semaphore CI article part 2](https://semaphoreci.com/community/tutorials/test-driven-development-of-go-web-applications-with-gin)
 
 [Cloud Code in VSCode](https://www.youtube.com/watch?v=62GLbBDLiPE)
+
+[Cobra library](https://github.com/spf13/cobra)
