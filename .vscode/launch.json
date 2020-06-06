@@ -13,14 +13,7 @@
             "cleanUp": true,
             "portForward": true
         },
-        {
-            "name": "Debug CLI",
-            "type": "go",
-            "request": "launch",
-            "mode": "debug",
-            "program": "${workspaceFolder}/cmd/cli",
-            "args": ["list"]
-        },
+        
         {
             "name": "Server Test Debug",
             "type": "go",
@@ -46,6 +39,22 @@
             "env": {},
             "args": [],
             "showLog": true
-        }       
+        },
+        {
+            "name": "Debug CLI list",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/cmd/cli",
+            "args": ["list"]
+        },
+        {
+            "name": "Debug CLI login",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/cmd/cli",
+            "args": ["login"]
+        }    
     ]
 }

@@ -39,10 +39,20 @@ func init() {
 
 func cfgWizard() {
 	fmt.Print("Enter the server URL: ")
-
 	var u string
 	fmt.Scanf("%s", &u)
+
+	fmt.Print("Username: ")
+	var id string
+	fmt.Scanf("%s", &id)
+
+	fmt.Print("Password: ")
+	var pass string
+	fmt.Scanf("%s", &pass)
+
 	fmt.Printf("Add to the config the following URL: %s", u)
 	viper.Set("url", u)
+	viper.Set("id", id)
+	viper.Set("pass", pass)
 	viper.WriteConfig()
 }
