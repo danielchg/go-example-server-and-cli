@@ -17,35 +17,49 @@ package cmd
 
 import (
 	"fmt"
+	"log"
+	"net/http"
+	"net/url"
+	"strings"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // loginCmd represents the login command
 var loginCmd = &cobra.Command{
 	Use:   "login",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Login to the server",
+	Long:  `Login to the server in order to create new articles from the CLI.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("login called")
+		u := fmt.Sprintf("%s/u/login", viper.GetString("url"))
+		id := viper.GetString("id")
+		pass := viper.GetString("pass")
+
+		loginServer(u, id, pass)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(loginCmd)
+}
 
-	// Here you will define your flags and configuration settings.
+func loginServer(u, id, pass string) {
+	formData := url.Values{"username": {id}, "password": {pass}}
+	c := &http.Client{}
+	req, _ := http.NewRequest("POST", u, strings.NewReader(formData.Encode()))
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	res, err := c.Do(req)
+	if err != nil {
+		log.Fatalf("can not connect to URL: %v", err)
+	}
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// loginCmd.PersistentFlags().String("foo", "", "A help for foo")
+	if res.StatusCode != http.StatusOK {
+		log.Fatalf("error calling to URL: %v", res.StatusCode)
+	}
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// loginCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	viper.Set("cookie", res.Cookies())
+	viper.WriteConfig()
+	fmt.Printf("User %s loged successfully", id)
+
 }

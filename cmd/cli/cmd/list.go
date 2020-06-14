@@ -28,6 +28,17 @@ import (
 	"github.com/spf13/viper"
 )
 
+type article struct {
+	Title   string `json:"title"`
+	Content string `json:"content"`
+}
+
+// Body define the struct taht goes in Response
+type Body struct {
+	Bytes  []byte
+	String string
+}
+
 // listCmd represents the list command
 var listCmd = &cobra.Command{
 	Use:   "list",
@@ -51,27 +62,6 @@ var listCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(listCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// listCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// listCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-}
-
-type article struct {
-	Title   string `json:"title"`
-	Content string `json:"content"`
-}
-
-// Body define the struct taht goes in Response
-type Body struct {
-	Bytes  []byte
-	String string
 }
 
 func listArticles(url string) []article {
