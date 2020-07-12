@@ -26,42 +26,44 @@ import (
 	"github.com/spf13/viper"
 )
 
-// loginCmd represents the login command
-var loginCmd = &cobra.Command{
-	Use:   "login",
-	Short: "Login to the server",
-	Long:  `Login to the server in order to create new articles from the CLI.`,
+// createCmd represents the create command
+var createCmd = &cobra.Command{
+	Use:   "create",
+	Short: "Create and publish a new article to the server",
+	Long:  `Create and publish a new article to the server with a wizard or by a file.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		u := fmt.Sprintf("%s/u/login", viper.GetString("url"))
-		id := viper.GetString("id")
-		pass := viper.GetString("pass")
-
-		loginServer(u, id, pass)
+		createArticle()
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(loginCmd)
+	rootCmd.AddCommand(createCmd)
+
 }
 
-func loginServer(u, id, pass string) {
-	formData := url.Values{"username": {id}, "password": {pass}}
+func createArticle() {
+
+	cookie := viper.GetString("cookie")
+	fmt.Print("Please enter the article title: ")
+	var title string
+	fmt.Scanf("%s", &title)
+
+	fmt.Print("Please enter content of the article: ")
+	var content string
+	fmt.Scanf("%s", &content)
+
+	u := fmt.Sprintf("%s/article/create", viper.GetString("url"))
+	formData := url.Values{"title": {title}, "content": {content}}
 	c := &http.Client{}
 	req, _ := http.NewRequest("POST", u, strings.NewReader(formData.Encode()))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Set("Cookie", cookie)
 	res, err := c.Do(req)
 	if err != nil {
 		log.Fatalf("can not connect to URL: %v", err)
 	}
-
 	if res.StatusCode != http.StatusOK {
 		log.Fatalf("error calling to URL: %v", res.StatusCode)
 	}
-	ck := fmt.Sprintf("%s", res.Cookies()[0])
-	s := strings.Split(ck, ";")
-
-	viper.Set("cookie", s[0])
-	viper.WriteConfig()
-	fmt.Printf("User %s loged successfully", id)
-
+	fmt.Println("Article created successfully")
 }
